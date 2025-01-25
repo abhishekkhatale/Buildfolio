@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Customizer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', system-ui, -apple-system, sans-serif;
+        }
+        body {
+            background: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            padding: 2rem;
+        }
+        .form-container {
+            background: white;
+            width: 100%;
+            max-width: 600px;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .add-btn {
+            background: #0d5b60;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 0.5rem;
+        }
+        #submitBtn {
+            width: 100%;
+            background: #0d5b60;
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+        #skillsContainer, #projectsContainer, #experiencesContainer {
+            margin-bottom: 1rem;
+        }
+        .skill-item, .project-item, .experience-item {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .remove-btn {
+            background: #ff4d4d;
+            color: white;
+            border: none;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Portfolio Customization</h2>
+        <form id="portfolioForm">
+            <div class="form-group">
+                <label>Portfolio Name</label>
+                <input type="text" id="portfolioName" name="portfolioName" required>
+            </div>
+
+            <div class="form-group">
+                <label>About Description</label>
+                <textarea id="aboutDescription" name="aboutDescription" rows="4" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Skills</label>
+                <div id="skillsContainer"></div>
+                <button type="button" class="add-btn" onclick="addSkill()">Add Skill</button>
+            </div>
+
+            <div class="form-group">
+                <label>Projects</label>
+                <div id="projectsContainer"></div>
+                <button type="button" class="add-btn" onclick="addProject()">Add Project</button>
+            </div>
+
+            <div class="form-group">
+                <label>Experiences</label>
+                <div id="experiencesContainer"></div>
+                <button type="button" class="add-btn" onclick="addExperience()">Add Experience</button>
+            </div>
+
+            <div class="form-group">
+                <label>Contact Links</label>
+                <input type="text" id="linkedin" placeholder="LinkedIn URL">
+                <input type="text" id="github" placeholder="GitHub URL">
+                <input type="text" id="instagram" placeholder="Instagram URL">
+                <input type="text" id="whatsapp" placeholder="WhatsApp URL">
+            </div>
+
+            <button type="submit" id="submitBtn">Generate Portfolio</button>
+        </form>
+    </div>
+
+    <script>
+        // JavaScript for adding/removing fields and submitting data
+        function addSkill() {
+            const container = document.getElementById('skillsContainer');
+            const div = document.createElement('div');
+            div.className = 'skill-item';
+            div.innerHTML = `
+                <input type="text" placeholder="Skill" required>
+                <button type="button" class="remove-btn" onclick="this.parentElement.remove()">Remove</button>
+            `;
+            container.appendChild(div);
+        }
+
+        function addProject() {
+            const container = document.getElementById('projectsContainer');
+            const div = document.createElement('div');
+            div.className = 'project-item';
+            div.innerHTML = `
+                <input type="text" placeholder="Project Title" required>
+                <textarea placeholder="Project Description" required></textarea>
+                <button type="button" class="remove-btn" onclick="this.parentElement.remove()">Remove</button>
+            `;
+            container.appendChild(div);
+        }
+
+        function addExperience() {
+            const container = document.getElementById('experiencesContainer');
+            const div = document.createElement('div');
+            div.className = 'experience-item';
+            div.innerHTML = `
+                <input type="text" placeholder="Experience Title" required>
+                <textarea placeholder="Experience Description" required></textarea>
+                <button type="button" class="remove-btn" onclick="this.parentElement.remove()">Remove</button>
+            `;
+            container.appendChild(div);
+        }
+
+        document.getElementById('portfolioForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const portfolioData = {
+                portfolioName: document.getElementById('portfolioName').value,
+                aboutDescription: document.getElementById('aboutDescription').value,
+                skills: Array.from(document.querySelectorAll('#skillsContainer input')).map(input => input.value),
+                projects: Array.from(document.querySelectorAll('#projectsContainer .project-item')).map(item => ({
+                    title: item.querySelector('input').value,
+                    description: item.querySelector('textarea').value
+                })),
+                experiences: Array.from(document.querySelectorAll('#experiencesContainer .experience-item')).map(item => ({
+                    title: item.querySelector('input').value,
+                    description: item.querySelector('textarea').value
+                })),
+                contactLinks: {
+                    linkedin: document.getElementById('linkedin').value || "#",
+                    github: document.getElementById('github').value || "#",
+                    instagram: document.getElementById('instagram').value || "#",
+                    whatsapp: document.getElementById('whatsapp').value || "#",
+                }
+            };
+            localStorage.setItem('portfolioData', JSON.stringify(portfolioData));
+            window.location.href = 'protfolio.html';
+        });
+    </script>
+</body>
+</html>
