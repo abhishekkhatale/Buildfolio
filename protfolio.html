@@ -158,7 +158,7 @@
 
         .skills {
             padding: 4rem 5%;
-            background: #efefef;
+            background: #d4d4d4;
         }
 
         .skills-grid {
@@ -332,13 +332,21 @@
     <section class="hero">
         <div class="hero-content fade-in">
             <h1>Welcome To My <span>Website</span></h1>
-            <p>Explore my portfolio to discover my skills, projects, and experiences!</p>
+            <p>Thank you for stopping by. Here, you’ll find a showcase of my work, skills, and projects that reflect my passion for web development. Feel free to explore, and don’t hesitate to reach out if you’d like to collaborate or discuss opportunities. Let’s create something amazing together! </p>
+        </div>
+        <div class="hero-image">
+            <img src="moc.png" alt="Portfolio Preview" id="heroImage">
         </div>
     </section>
 
     <section id="about" class="about">
-        <h2>About Me</h2>
-        <p id="aboutDescription">Default about text.</p>
+        <div class="about-image slide-in">
+            <img src="pro.jpg" alt="About Me" id="aboutImage">
+        </div>
+        <div class="about-content slide-in">
+            <h2>About Me</h2>
+            <p id="aboutDescription">Default about text.</p>
+        </div>
     </section>
 
     <section id="skills" class="skills">
@@ -372,6 +380,10 @@
 
                 // Update about section
                 document.getElementById('aboutDescription').textContent = savedData.aboutDescription || "No description provided.";
+
+                // Update images
+                document.getElementById('heroImage').src = "moc.png"; // Ensure "moc.png" is in the same folder
+                document.getElementById('aboutImage').src = "pro.jpg"; // Ensure "pro.jpg" is in the same folder
 
                 // Populate skills
                 const skillsContainer = document.getElementById('skillsContainer');
@@ -422,8 +434,7 @@
                     <a href="${links.linkedin || '#'}" class="hover-scale"><img src="message.png" alt="LinkedIn"></a>
                     <a href="${links.github || '#'}" class="hover-scale"><img src="github (1).png" alt="GitHub"></a>
                     <a href="${links.instagram || '#'}" class="hover-scale"><img src="instagram (1).png" alt="Instagram"></a>
-                    <a href="${links.whatsapp || '#'}" class="hover-scale"><img src="whatsapp (1).png" alt="WhatsApp"></a>
-                `;
+                    <a href="${links.whatsapp || '#'}" class="hover-scale"><img src="whatsapp (1).png" alt="WhatsApp"></a>`;
             } else {
                 alert("No portfolio data found! Please go to the customizer and create your portfolio.");
             }
